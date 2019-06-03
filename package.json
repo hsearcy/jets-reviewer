@@ -5,7 +5,10 @@
     "coffeescript": "1.12.7",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
-    "postcss-cssnext": "^3.1.0"
+    "postcss-cssnext": "^3.1.0",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.10"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.5.1"
