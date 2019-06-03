@@ -1,6 +1,6 @@
 default: &default
   adapter: postgresql
-  encoding: utf8
+  encoding: SQL_ASCII
   pool: <%= ENV["DB_POOL"] || 5  %>
   database: <%= ENV['DB_NAME'] || 'jets-reviewer_development' %>
   username: <%= ENV['DB_USER'] || ENV['USER'] %>
