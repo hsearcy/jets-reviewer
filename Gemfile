@@ -5,7 +5,8 @@ gem "jets"
 # Include webpacker if you are you are building html pages
 gem "webpacker", git: "https://github.com/tongueroo/webpacker.git", branch: "jets"
 
-gem "pg", "~> 1.1"
+# Include pg gem if you are using ActiveRecord, remove if you are not
+gem "pg", "~> 1.1.3"
 
 gem "dynomite"
 
@@ -21,5 +22,3 @@ group :test do
   gem 'launchy'
   gem 'capybara'
 end
-
-
