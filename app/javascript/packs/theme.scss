@@ -1,1 +1,5 @@
 @import "~bulma/bulma";
+
+.is-hoverable tbody tr:hover td {
+  background-color: gainsboro;
+}
