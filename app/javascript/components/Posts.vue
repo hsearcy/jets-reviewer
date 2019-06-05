@@ -31,6 +31,17 @@
           <tbody>
             <tr v-for="post in posts" v-bind:key="post.id">
               <td>{{post.title}}</td>
+              <td>
+                <span class="icon has-text-danger">
+                  <font-awesome-icon icon="trash"></font-awesome-icon>
+                </span>
+                <span class="icon">
+                  <font-awesome-icon icon="pen"></font-awesome-icon>
+                </span>
+                <span class="icon has-text-info">
+                  <font-awesome-icon icon="eye"></font-awesome-icon>
+                </span>
+              </td>
             </tr>
           </tbody>
         </table>
