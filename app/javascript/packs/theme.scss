@@ -3,3 +3,9 @@
 .is-hoverable tbody tr:hover td {
   background-color: gainsboro;
 }
+
+.section {
+  .is-small {
+    padding: 1rem;
+  }
+}

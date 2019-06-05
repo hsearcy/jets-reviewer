@@ -1,6 +1,6 @@
 <template>
   <section class="section">
-    <section class="section">
+    <section class="section is-small">
       <div class="container">
         <div class="card column is-half is-centered">
           <div class="card-header-title is-centered">Add a new post</div>
@@ -20,7 +20,7 @@
         </div>
       </div>
     </section>
-    <section class="section">
+    <section class="section is-small">
       <div class="container">
         <table class="table is-striped is-hoverable">
           <thead>
@@ -71,5 +71,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
