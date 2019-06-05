@@ -1,16 +1,18 @@
 <template>
   <div class="posts">
     <h1>Posts</h1>
-    <div class="card">
-      <div class="card-header">Add a new post</div>
-      <div class="card-body">
+    <div class="card column is-half">
+      <div class="card-header-title">Add a new post</div>
+      <div class="card-content">
         <form v-on:submit.prevent="onSubmit" class="form-inline">
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" v-model="postData.title" required>
+          <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+              <input class="input" type="text" v-model="postData.title" required>
+            </div>
           </div>
-          <div>
-            <button type="submit">Add</button>
+          <div class="control">
+            <button class="button is-primary" type="submit">Add</button>
           </div>
         </form>
       </div>
