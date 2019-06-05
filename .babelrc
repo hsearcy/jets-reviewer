@@ -3,12 +3,12 @@
     [
       "@babel/preset-env",
       {
-        "modules": false,
+        "modules": "auto",
         "targets": {
           "browsers": "> 1%",
           "uglify": true
         },
-        "useBuiltIns": "usage"
+        "useBuiltIns": "entry"
       }
     ]
   ],
