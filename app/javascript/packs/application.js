@@ -1,11 +1,13 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import Vue from "vue";
-import App from "../components/app.vue";
+import App from "../app.vue";
+import router from "../router";
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({
-    render: h => h(App)
+    render: h => h(App),
+    router
   }).$mount();
   document.body.appendChild(app.$el);
 

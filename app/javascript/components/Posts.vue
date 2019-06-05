@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="posts">
     <div v-for="post in posts" :key="post.id">
       <p>{{post.title}}</p>
     </div>
@@ -10,6 +10,7 @@
 <script>
 import axios from "axios";
 export default {
+  name: "Posts",
   data: function() {
     return {
       message: "Hello Vue!",
