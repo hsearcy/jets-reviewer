@@ -3,7 +3,7 @@ import "regenerator-runtime/runtime";
 import Vue from "vue";
 import App from "../app.vue";
 import router from "../router";
-import "./main.scss";
+import "./theme.scss";
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({
