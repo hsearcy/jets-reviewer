@@ -36,10 +36,10 @@
                 </td>
                 <td>
                   <span class="icon">
-                    <font-awesome-icon v-on:click="onSubmitEdit(post.id)" icon="check"></font-awesome-icon>
+                    <font-awesome-icon v-on:click="onSubmitEdit(post.id)" icon="check"/>
                   </span>
                   <span class="icon">
-                    <font-awesome-icon v-on:click="onCancelEdit()" icon="ban"></font-awesome-icon>
+                    <font-awesome-icon v-on:click="onCancelEdit()" icon="ban"/>
                   </span>
                 </td>
               </template>
@@ -47,13 +47,13 @@
                 <td>{{post.title}}</td>
                 <td>
                   <a href="#" class="icon has-text-danger">
-                    <font-awesome-icon v-on:click="onDelete(post.id)" icon="trash"></font-awesome-icon>
+                    <font-awesome-icon v-on:click="onDelete(post.id)" icon="trash"/>
                   </a>
                   <a href="#" class="icon">
-                    <font-awesome-icon v-on:click="onEdit(post)" icon="pen"></font-awesome-icon>
+                    <font-awesome-icon v-on:click="onEdit(post)" icon="pen"/>
                   </a>
-                  <router-link :to="{ name: PostPage, params: { id: post.id }}" class="icon">
-                    <font-awesome-icon v-on:click="onView(post.id)" icon="eye"></font-awesome-icon>
+                  <router-link :to="{ name: 'PostPage', params: { id: post.id }}" class="icon">
+                    <font-awesome-icon icon="eye"/>
                   </router-link>
                 </td>
               </template>
@@ -69,7 +69,7 @@
 import axios from "axios";
 export default {
   name: "Posts",
-  data: function() {
+  data: () => {
     return {
       editId: "",
       editPostData: {
