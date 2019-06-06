@@ -43,10 +43,11 @@ class PostsController < ApplicationController
       if request.xhr?
         render json: {success: true, location: url_for("/posts/#{@post.id}")}
       else
-        redirect_to "/posts/#{@post.id}"
+        # redirect_to "/posts/#{@post.id}"
+        render json: {success: true, location: url_for("/posts/#{@post.id}")}
       end
     else
-      render :edit
+      # render :edit
     end
   end
 
@@ -56,7 +57,8 @@ class PostsController < ApplicationController
     if request.xhr?
       render json: {success: true}
     else
-      redirect_to "/posts"
+      # redirect_to "/posts"
+      render json: {success: true}
     end
   end
 

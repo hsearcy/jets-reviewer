@@ -30,18 +30,33 @@
           </thead>
           <tbody>
             <tr v-for="post in posts" v-bind:key="post.id">
-              <td>{{post.title}}</td>
-              <td>
-                <span class="icon has-text-danger">
-                  <font-awesome-icon icon="trash"></font-awesome-icon>
-                </span>
-                <span class="icon">
-                  <font-awesome-icon icon="pen"></font-awesome-icon>
-                </span>
-                <span class="icon has-text-info">
-                  <font-awesome-icon icon="eye"></font-awesome-icon>
-                </span>
-              </td>
+              <template v-if="editId === post.id">
+                <td>
+                  <input class="input" type="text" v-model="editPostData.title" required>
+                </td>
+                <td>
+                  <span class="icon">
+                    <font-awesome-icon v-on:click="onSubmitEdit(post.id)" icon="check"></font-awesome-icon>
+                  </span>
+                  <span class="icon">
+                    <font-awesome-icon v-on:click="onCancelEdit()" icon="ban"></font-awesome-icon>
+                  </span>
+                </td>
+              </template>
+              <template v-else>
+                <td>{{post.title}}</td>
+                <td>
+                  <a href="#" class="icon has-text-danger">
+                    <font-awesome-icon v-on:click="onDelete(post.id)" icon="trash"></font-awesome-icon>
+                  </a>
+                  <a href="#" class="icon">
+                    <font-awesome-icon v-on:click="onEdit(post)" icon="pen"></font-awesome-icon>
+                  </a>
+                  <router-link :to="{ name: PostPage, params: { id: post.id }}" class="icon">
+                    <font-awesome-icon v-on:click="onView(post.id)" icon="eye"></font-awesome-icon>
+                  </router-link>
+                </td>
+              </template>
             </tr>
           </tbody>
         </table>
@@ -56,6 +71,10 @@ export default {
   name: "Posts",
   data: function() {
     return {
+      editId: "",
+      editPostData: {
+        title: ""
+      },
       posts: [],
       postData: {
         title: ""
@@ -76,6 +95,26 @@ export default {
       });
       this.postData.title = "";
       await this.getPosts();
+    },
+    async onDelete(id) {
+      await axios.delete(`http://localhost:8888/api/posts/${id}`);
+      await this.getPosts();
+    },
+    onEdit(post) {
+      this.editId = post.id;
+      this.editPostData.title = post.title;
+    },
+    async onSubmitEdit() {
+      await axios.put(`http://localhost:8888/api/posts/${this.editId}`, {
+        post: this.editPostData
+      });
+      this.editPostData.title = "";
+      this.editId = "";
+      await this.getPosts();
+    },
+    onCancelEdit() {
+      this.editPostData.title = "";
+      this.editId = "";
     }
   }
 };
