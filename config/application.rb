@@ -2,7 +2,7 @@ Jets.application.configure do
   config.project_name = "jets-reviewer"
   config.mode = "html"
 
-  config.prewarm.enable = true # default is true
+  config.prewarm.enable = false # default is true
   # config.prewarm.rate = '30 minutes' # default is '30 minutes'
   # config.prewarm.concurrency = 2 # default is 2
   # config.prewarm.public_ratio = 3 # default is 3
@@ -19,9 +19,9 @@ Jets.application.configure do
   }
   # config.cors = '*.mydomain.com' # for specific domain
 
-  # config.function.timeout = 30 # defaults to 30
+  config.function.timeout = 10 # defaults to 30
   # config.function.role = "arn:aws:iam::#{Jets.aws.account}:role/service-role/pre-created"
-  # config.function.memory_size = 1536
+  config.function.memory_size = 256
 
   # config.api.endpoint_type = 'PRIVATE' # Default is 'EDGE' (https://docs.aws.amazon.com/apigateway/api-reference/link-relation/restapi-create/#endpointConfiguration)
 
