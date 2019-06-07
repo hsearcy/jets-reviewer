@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../plugins/axios";
 
 export default {
   name: "PostPage",
@@ -41,9 +41,7 @@ export default {
     };
   },
   async beforeCreate() {
-    const response = await axios.get(
-      `http://localhost:8888/api/posts/${this.$route.params.id}`
-    );
+    const response = await axios.get(`api/posts/${this.$route.params.id}`);
     this.postData = response.data;
   }
 };

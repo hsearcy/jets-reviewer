@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../plugins/axios";
 export default {
   name: "Posts",
   data: () => {
@@ -86,18 +86,18 @@ export default {
   },
   methods: {
     async getPosts() {
-      const response = await axios.get("http://localhost:8888/api/posts");
+      const response = await axios.get("api/posts");
       this.posts = response.data;
     },
     async onSubmit() {
-      await axios.post("http://localhost:8888/api/posts", {
+      await axios.post("api/posts", {
         post: this.postData
       });
       this.postData.title = "";
       await this.getPosts();
     },
     async onDelete(id) {
-      await axios.delete(`http://localhost:8888/api/posts/${id}`);
+      await axios.delete(`api/posts/${id}`);
       await this.getPosts();
     },
     onEdit(post) {
@@ -105,7 +105,7 @@ export default {
       this.editPostData.title = post.title;
     },
     async onSubmitEdit() {
-      await axios.put(`http://localhost:8888/api/posts/${this.editId}`, {
+      await axios.put(`api/posts/${this.editId}`, {
         post: this.editPostData
       });
       this.editPostData.title = "";
