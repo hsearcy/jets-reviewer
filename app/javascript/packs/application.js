@@ -1,5 +1,7 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+import Amplify from "aws-amplify";
+import aws_exports from "./aws-exports";
 import Vue from "vue";
 import App from "../app.vue";
 import router from "../router";
@@ -21,6 +23,8 @@ icon({ prefix: "fas", iconName: "ban" });
 icon({ prefix: "fas", iconName: "check" });
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
+
+Amplify.configure(aws_exports);
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({
