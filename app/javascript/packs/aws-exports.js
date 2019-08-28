@@ -10,7 +10,7 @@ const aws_exports = {
 
     // OPTIONAL - Amazon Cognito Federated Identity Pool Region
     // Required only if it's different from Amazon Cognito Region
-    identityPoolRegion: "XX-XXXX-X",
+    // identityPoolRegion: "XX-XXXX-X",
 
     // OPTIONAL - Amazon Cognito User Pool ID
     userPoolId: "us-east-1_fhhFVS3st",
@@ -23,17 +23,17 @@ const aws_exports = {
 
     // OPTIONAL - Configuration for cookie storage
     // Note: if the secure flag is set to true, then the cookie transmission requires a secure protocol
-    // cookieStorage: {
-    // // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-    //     domain: '.yourdomain.com',
-    // // OPTIONAL - Cookie path
-    //     path: '/',
-    // // OPTIONAL - Cookie expiration in days
-    //     expires: 365,
-    // // OPTIONAL - Cookie secure flag
-    // // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
-    //     secure: true
-    // },
+    cookieStorage: {
+      // REQUIRED - Cookie domain (only required if cookieStorage is provided)
+      domain: "localhost",
+      // OPTIONAL - Cookie path
+      path: "/",
+      // OPTIONAL - Cookie expiration in days
+      expires: 365,
+      // OPTIONAL - Cookie secure flag
+      // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
+      secure: false
+    },
 
     // OPTIONAL - customized storage object
     // storage: new MyStorage(),
