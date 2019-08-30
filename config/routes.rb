@@ -1,7 +1,9 @@
 Jets.application.routes.draw do
-  root "pages#index"
+  root 'pages#index'
   get '404', to: 'pages#index'
   namespace :api do
+    post 'register', to: 'auth#register'
+    post 'login', to: 'auth#login'
     resources :posts
   end
 

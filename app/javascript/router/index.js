@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
-import { components, AmplifyEventBus } from "aws-amplify-vue";
-import Amplify, * as AmplifyModules from "aws-amplify";
-import { AmplifyPlugin } from "aws-amplify-vue";
-import AmplifyStore from "../store/store";
+// import { components, AmplifyEventBus } from "aws-amplify-vue";
+// import Amplify, * as AmplifyModules from "aws-amplify";
+// import { AmplifyPlugin } from "aws-amplify-vue";
+// import AmplifyStore from "../store/store";
+import store from "../store/store";
 import Posts from "../components/Posts";
 import PostPage from "../components/PostPage";
 import Login from "../components/Login";
@@ -12,40 +13,40 @@ import Register from "../components/Register";
 
 Vue.use(Router);
 
-Vue.use(AmplifyPlugin, AmplifyModules);
+// Vue.use(AmplifyPlugin, AmplifyModules);
 
-let user;
+// let user;
 
-getUser().then((user, error) => {
-  if (user) {
-    router.push({ path: "/" });
-  }
-});
+// getUser().then((user, error) => {
+//   if (user) {
+//     router.push({ path: "/" });
+//   }
+// });
 
-AmplifyEventBus.$on("authState", async state => {
-  if (state === "signedOut") {
-    user = null;
-    AmplifyStore.commit("setUser", null);
-    router.push({ path: "/auth" });
-  } else if (state === "signedIn") {
-    user = await getUser();
-    router.push({ path: "/" });
-  }
-});
+// AmplifyEventBus.$on("authState", async state => {
+//   if (state === "signedOut") {
+//     user = null;
+//     AmplifyStore.commit("setUser", null);
+//     router.push({ path: "/auth" });
+//   } else if (state === "signedIn") {
+//     user = await getUser();
+//     router.push({ path: "/" });
+//   }
+// });
 
-function getUser() {
-  return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser()
-    .then(data => {
-      if (data && data.signInUserSession) {
-        AmplifyStore.commit("setUser", data);
-        return data;
-      }
-    })
-    .catch(e => {
-      AmplifyStore.commit("setUser", null);
-      return null;
-    });
-}
+// function getUser() {
+//   return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser()
+//     .then(data => {
+//       if (data && data.signInUserSession) {
+//         AmplifyStore.commit("setUser", data);
+//         return data;
+//       }
+//     })
+//     .catch(e => {
+//       AmplifyStore.commit("setUser", null);
+//       return null;
+//     });
+// }
 
 const router = new Router({
   routes: [
@@ -53,13 +54,13 @@ const router = new Router({
       path: "/",
       name: "Posts",
       component: Posts,
-      meta: { requiresAuth: true}
+      meta: { requiresAuth: true }
     },
     {
       path: "/post/:id",
       name: "PostPage",
       component: PostPage,
-      meta: { requiresAuth: true}
+      meta: { requiresAuth: true }
     },
     {
       path: "/register",
@@ -75,29 +76,25 @@ const router = new Router({
       path: "/logout",
       name: "Logout",
       component: Logout
-    },
-    {
-      path: '/auth',
-      name: 'Authenticator',
-      component: components.Authenticator
     }
+    // {
+    //   path: '/auth',
+    //   name: 'Authenticator',
+    //   component: components.Authenticator
+    // }
   ]
 });
 
 router.beforeResolve(async (to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    user = await getUser();
-    if (!user) {
-      return next({
-        path: "/auth",
-        query: {
-          redirect: to.fullPath
-        }
-      });
+    if (store.getters.isLoggedIn) {
+      next();
+      return;
     }
-    return next();
+    next("/login");
+  } else {
+    next();
   }
-  return next();
 });
 
 export default router;

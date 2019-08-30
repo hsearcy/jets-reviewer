@@ -11,17 +11,40 @@
             <router-link class="navbar-item" to="/login">Login</router-link>
             <router-link class="navbar-item" to="/register">Register</router-link>
             <router-link class="navbar-item" to="/logout">Logout</router-link>
+            <span v-if="isLoggedIn">
+              |
+              <a @click="logout">Logout</a>
+            </span>
           </div>
         </nav>
       </div>
     </section>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
+  created() {
+    this.$http.interceptors.response.use(undefined, async err => {
+      if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+        await this.$store.dispatch(logout);
+      }
+      throw err;
+    });
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch("logout");
+      this.$router.push("/login");
+    }
+  }
 };
 </script>
 

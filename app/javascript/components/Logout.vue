@@ -3,7 +3,7 @@
     <section class="section is-small">
       <div class="container">
         <div class="card column is-half is-centered">
-          <div class="card-header-title is-centered">Add a new post</div>
+          <div class="card-header-title is-centered">Logout</div>
           <div class="card-content">
             
           </div>
