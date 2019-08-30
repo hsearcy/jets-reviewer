@@ -1,33 +1,25 @@
 require 'aws-sdk-cognitoidentityprovider'
+require 'openssl'
+require 'base64'
 
 class AuthController < ApplicationController
-
   def register
+    client = Aws::CognitoIdentityProvider::Client.new(region: "us-east-1");
     puts params
+    hashdata = params["username"] + ENV['COGNITO_CLIENT_ID']
     resp = client.sign_up({
       client_id: ENV['COGNITO_CLIENT_ID'], # required
-      secret_hash: ENV['COGNITO_CLIENT_SECRET'],
+      secret_hash: Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), ENV['COGNITO_CLIENT_SECRET'], hashdata)).strip(),
       username: params["username"], # required
       password: params["password"], # required
       user_attributes: [
         {
-          name: "AttributeNameType", # required
-          value: "AttributeValueType",
+          name: "email", # required
+          value: params["email"],
         },
-      ],
-      validation_data: [
-        {
-          name: "AttributeNameType", # required
-          value: "AttributeValueType",
-        },
-      ],
-      analytics_metadata: {
-        analytics_endpoint_id: "StringType",
-      },
-      user_context_data: {
-        encoded_data: "StringType",
-      },
-    })
+      ]
+    });
+    puts resp.inspect
   end
   # GET /posts
   def index
