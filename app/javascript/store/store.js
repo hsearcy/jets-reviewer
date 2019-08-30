@@ -49,6 +49,7 @@ export default new Vuex.Store({
       try {
         commit("auth_request");
         const response = await axios.post("api/login", userData);
+        console.log("response = ", response)
         const token = response.data.token;
         const user = response.data.user;
         localStorage.setItem("token", token);
