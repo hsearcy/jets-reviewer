@@ -8,13 +8,9 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
           <div class="navbar-brand">
             <router-link class="navbar-item" to="/">Home</router-link>
-            <router-link class="navbar-item" to="/login">Login</router-link>
-            <router-link class="navbar-item" to="/register">Register</router-link>
-            <router-link class="navbar-item" to="/logout">Logout</router-link>
-            <span v-if="isLoggedIn">
-              |
-              <a @click="logout">Logout</a>
-            </span>
+            <router-link class="navbar-item" v-if="!isLoggedIn" to="/login">Login</router-link>
+            <router-link class="navbar-item" v-if="!isLoggedIn" to="/register">Register</router-link>
+            <span class="navbar-item" v-if="isLoggedIn"> <a @click="logout">Logout</a></span>
           </div>
         </nav>
       </div>

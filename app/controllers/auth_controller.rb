@@ -36,8 +36,6 @@ class AuthController < ApplicationController
           "SECRET_HASH" => create_hash(params["username"])
         }
       })
-      puts resp.inspect()
-      puts resp.authentication_result.access_token
       if (valid_token?(params["username"], resp.authentication_result.id_token))
         render json: {success: true, token: resp.authentication_result.access_token, user: params["username"]}
       else
