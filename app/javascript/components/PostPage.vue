@@ -17,6 +17,10 @@
                 {{postData.title}}
               </div>
             </div>
+            <div class="field">
+              <div class="content" v-html="postData.body">
+              </div>
+            </div>
           </template>
           <template v-else>
             <progress class="progress is-small is-primary" max="100">loading</progress>
@@ -36,7 +40,8 @@ export default {
   data: () => {
     return {
       postData: {
-        title: ""
+        title: "",
+        body: ""
       }
     };
   },

@@ -12,6 +12,12 @@
                   <input class="input" type="text" v-model="postData.title" required>
                 </div>
               </div>
+              <div class="field">
+                <label class="label">Body</label>
+                <div class="control">
+                  <vue-editor v-model="postData.body" required></vue-editor>
+                </div>
+              </div>
               <div class="control">
                 <button class="button is-primary" type="submit">Add</button>
               </div>
@@ -32,14 +38,14 @@
             <tr v-for="post in posts" v-bind:key="post.id">
               <template v-if="editId === post.id">
                 <td>
-                  <input class="input" type="text" v-model="editPostData.title" required>
+                  <vue-editor v-model="editPostData.title" required></vue-editor>
                 </td>
                 <td>
                   <span class="icon">
-                    <font-awesome-icon v-on:click="onSubmitEdit(post.id)" icon="check"/>
+                    <font-awesome-icon v-on:click="onSubmitEdit(post.id)" icon="check" />
                   </span>
                   <span class="icon">
-                    <font-awesome-icon v-on:click="onCancelEdit()" icon="ban"/>
+                    <font-awesome-icon v-on:click="onCancelEdit()" icon="ban" />
                   </span>
                 </td>
               </template>
@@ -47,13 +53,13 @@
                 <td>{{post.title}}</td>
                 <td>
                   <a href="#" class="icon has-text-danger">
-                    <font-awesome-icon v-on:click="onDelete(post.id)" icon="trash"/>
+                    <font-awesome-icon v-on:click="onDelete(post.id)" icon="trash" />
                   </a>
                   <a href="#" class="icon">
-                    <font-awesome-icon v-on:click="onEdit(post)" icon="pen"/>
+                    <font-awesome-icon v-on:click="onEdit(post)" icon="pen" />
                   </a>
                   <router-link :to="{ name: 'PostPage', params: { id: post.id }}" class="icon">
-                    <font-awesome-icon icon="eye"/>
+                    <font-awesome-icon icon="eye" />
                   </router-link>
                 </td>
               </template>
@@ -66,9 +72,13 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
 import axios from "../plugins/axios";
 export default {
   name: "Posts",
+  components: {
+    VueEditor
+  },
   data: () => {
     return {
       editId: "",
@@ -77,7 +87,8 @@ export default {
       },
       posts: [],
       postData: {
-        title: ""
+        title: "",
+        body: ""
       }
     };
   },
@@ -94,6 +105,7 @@ export default {
         post: this.postData
       });
       this.postData.title = "";
+      this.postData.body = "";
       await this.getPosts();
     },
     async onDelete(id) {
