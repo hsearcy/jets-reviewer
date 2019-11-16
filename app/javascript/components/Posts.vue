@@ -9,7 +9,14 @@
               <div class="field">
                 <label class="label">Title</label>
                 <div class="control">
-                  <input class="input" type="text" v-model="postData.title" required>
+                  <input class="input" type="text" v-model="postData.title" required />
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Image Source</label>
+                <div class="control">
+                  <input class="input" type="text" v-model="postData.image_source" />
+                  <img v-if="postData.image_source" :src="postData.image_source" />
                 </div>
               </div>
               <div class="field">
@@ -38,7 +45,7 @@
             <tr v-for="post in posts" v-bind:key="post.id">
               <template v-if="editId === post.id">
                 <td>
-                  <vue-editor v-model="editPostData.title" required></vue-editor>
+                  <input class="input" type="text" v-model="editPostData.title" required />
                 </td>
                 <td>
                   <span class="icon">
@@ -52,10 +59,10 @@
               <template v-else>
                 <td>{{post.title}}</td>
                 <td>
-                  <a href="#" class="icon has-text-danger">
+                  <a class="icon has-text-danger">
                     <font-awesome-icon v-on:click="onDelete(post.id)" icon="trash" />
                   </a>
-                  <a href="#" class="icon">
+                  <a class="icon">
                     <font-awesome-icon v-on:click="onEdit(post)" icon="pen" />
                   </a>
                   <router-link :to="{ name: 'PostPage', params: { id: post.id }}" class="icon">
@@ -88,6 +95,7 @@ export default {
       posts: [],
       postData: {
         title: "",
+        image_source: "",
         body: ""
       }
     };
@@ -102,9 +110,10 @@ export default {
     },
     async onSubmit() {
       await axios.post("api/posts", {
-        post: this.postData
+        post: { ...this.postData, author: this.$store.getters.user }
       });
       this.postData.title = "";
+      this.postData.image_source = "";
       this.postData.body = "";
       await this.getPosts();
     },
@@ -133,4 +142,8 @@ export default {
 </script>
 
 <style scoped>
+img {
+  max-width: 200px;
+  height: auto;
+}
 </style>

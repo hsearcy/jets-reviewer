@@ -8,13 +8,13 @@ export default new Vuex.Store({
   state: {
     status: "",
     token: localStorage.getItem("token") || "",
-    user: {}
+    user: localStorage.getItem("user") || ""
   },
   mutations: {
     auth_request(state) {
       state.status = "loading";
     },
-    auth_success(state, token, user) {
+    auth_success(state, {token, user}) {
       state.status = "success";
       state.token = token;
       state.user = user;
@@ -31,13 +31,13 @@ export default new Vuex.Store({
     async register({ commit }, userData) {
       try {
         commit("auth_request");
-        console.log("User is : ", userData);
         const response = await axios.post("api/register", userData);
         const token = response.data.token;
         const user = response.data.user;
         localStorage.setItem("token", token);
+        localStorage.setItem("user", user);
         axios.defaults.headers.common["Authorization"] = token;
-        commit("auth_success", token, user);
+        commit("auth_success", {token, user});
         return response;
       } catch (err) {
         commit("auth_error", err);
@@ -53,25 +53,31 @@ export default new Vuex.Store({
         const token = response.data.token;
         const user = response.data.user;
         localStorage.setItem("token", token);
+        localStorage.setItem("user", user);
         axios.defaults.headers.common["Authorization"] = token;
-        commit("auth_success", token, user);
+        
+        console.log(user);
+        commit("auth_success", {token, user});
         return response;
       } catch (err) {
         commit("auth_error", err);
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         throw err;
       }
     },
     logout({ commit }) {
       commit("logout");
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       delete axios.defaults.headers.common["Authorization"];
       return;
     }
   },
   getters: {
     isLoggedIn: state => !!state.token,
-    authStatus: state => state.status
+    authStatus: state => state.status,
+    user: state => state.user
   }
 });
 

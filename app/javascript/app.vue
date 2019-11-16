@@ -3,14 +3,14 @@
     <section class="hero is-dark is-bold">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title is-1">Posts</h1>
+          <h1 class="title is-1">General Porpoise Reviewer</h1>
         </div>
         <nav class="navbar" role="navigation" aria-label="main navigation">
           <div class="navbar-brand">
             <router-link class="navbar-item" to="/">Home</router-link>
             <router-link class="navbar-item" v-if="!isLoggedIn" to="/login">Login</router-link>
             <router-link class="navbar-item" v-if="!isLoggedIn" to="/register">Register</router-link>
-            <span class="navbar-item" v-if="isLoggedIn"> <a @click="logout">Logout</a></span>
+            <span class="navbar-item" v-if="isLoggedIn"> <a @click="logout">Logout {{user}}</a></span>
           </div>
         </nav>
       </div>
@@ -25,6 +25,9 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
+    },
+    user() {
+      return this.$store.getters.user;
     }
   },
   created() {
