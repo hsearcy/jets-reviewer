@@ -33,46 +33,33 @@
         </div>
       </div>
     </section>
-    <section class="section is-small">
-      <div class="container">
-        <table class="table is-striped is-hoverable">
-          <thead>
-            <tr>
-              <th>All Posts</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="post in posts" v-bind:key="post.id">
-              <template v-if="editId === post.id">
-                <td>
-                  <input class="input" type="text" v-model="editPostData.title" required />
-                </td>
-                <td>
-                  <span class="icon">
-                    <font-awesome-icon v-on:click="onSubmitEdit(post.id)" icon="check" />
-                  </span>
-                  <span class="icon">
-                    <font-awesome-icon v-on:click="onCancelEdit()" icon="ban" />
-                  </span>
-                </td>
-              </template>
-              <template v-else>
-                <td>{{post.title}}</td>
-                <td>
+    <section class="section is-large">
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter" v-for="post in posts" v-bind:key="post.id">
+          <div class="card posts">
+            <router-link :to="{ name: 'PostPage', params: { id: post.id }}">
+              <div class="card-image post-image has-text-centered level">
+                <figure class="image is-inline-block level-item">
+                  <img v-if="post.image_source" :src="post.image_source" />
+                  <img v-else src="no-image.png" />
+                </figure>
+              </div>
+              <div class="card-content post-content">
+                <div class="content">
+                  <p class="subtitle has-text-centered">{{post.title}}</p>
+                </div>
+              </div>
+            </router-link>
+              <footer class="card-footer post-footer">
+                <p class="card-footer-item">By: {{post.author}}</p>
+                <p v-if="user === post.author" class="card-footer-item">
                   <a class="icon has-text-danger">
                     <font-awesome-icon v-on:click="onDelete(post.id)" icon="trash" />
                   </a>
-                  <a class="icon">
-                    <font-awesome-icon v-on:click="onEdit(post)" icon="pen" />
-                  </a>
-                  <router-link :to="{ name: 'PostPage', params: { id: post.id }}" class="icon">
-                    <font-awesome-icon icon="eye" />
-                  </router-link>
-                </td>
-              </template>
-            </tr>
-          </tbody>
-        </table>
+                </p>
+              </footer>
+          </div>
+        </div>
       </div>
     </section>
   </section>
@@ -86,12 +73,13 @@ export default {
   components: {
     VueEditor
   },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    }
+  },
   data: () => {
     return {
-      editId: "",
-      editPostData: {
-        title: ""
-      },
       posts: [],
       postData: {
         title: "",
@@ -120,22 +108,6 @@ export default {
     async onDelete(id) {
       await axios.delete(`api/posts/${id}`);
       await this.getPosts();
-    },
-    onEdit(post) {
-      this.editId = post.id;
-      this.editPostData.title = post.title;
-    },
-    async onSubmitEdit() {
-      await axios.put(`api/posts/${this.editId}`, {
-        post: this.editPostData
-      });
-      this.editPostData.title = "";
-      this.editId = "";
-      await this.getPosts();
-    },
-    onCancelEdit() {
-      this.editPostData.title = "";
-      this.editId = "";
     }
   }
 };
@@ -144,6 +116,22 @@ export default {
 <style scoped>
 img {
   max-width: 200px;
-  height: auto;
+  max-height: 200px;
+}
+
+.posts {
+  height: 350px;
+}
+
+.post-image {
+  height: 200px;
+}
+
+.post-content {
+  height: 75px;
+}
+
+.post-footer {
+  height: 50px;
 }
 </style>
