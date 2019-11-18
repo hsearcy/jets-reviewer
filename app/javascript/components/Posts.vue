@@ -50,14 +50,14 @@
                 </div>
               </div>
             </router-link>
-              <footer class="card-footer post-footer">
-                <p class="card-footer-item">By: {{post.author}}</p>
-                <p v-if="user === post.author" class="card-footer-item">
-                  <a class="icon has-text-danger">
-                    <font-awesome-icon v-on:click="onDelete(post.id)" icon="trash" />
-                  </a>
-                </p>
-              </footer>
+            <footer class="card-footer post-footer">
+              <p class="card-footer-item">By: {{post.author}}</p>
+              <p v-if="user === post.author" class="card-footer-item">
+                <a class="icon has-text-danger">
+                  <font-awesome-icon v-on:click="onDelete(post.id)" icon="trash" />
+                </a>
+              </p>
+            </footer>
           </div>
         </div>
       </div>
@@ -121,6 +121,7 @@ img {
 
 .posts {
   height: 350px;
+  background-color: lightgray;
 }
 
 .post-image {
